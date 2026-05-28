@@ -1622,3 +1622,137 @@ table.table tbody tr:hover {
 .admin-shell nav a[aria-current='page'] svg {
   color: var(--foreground) !important;
 }
+
+/* ---------------------------------------------------------------------
+   M. Surgical fixes
+   --------------------------------------------------------------------- */
+
+/* M1. Doc header (Header/Footer globals, every edit + create view) —
+   the title sits outside `.collection-edit`/`.global-edit`, so it doesn't
+   inherit the 32px top padding. Add the same vertical rhythm + 28px h1
+   that the list-view uses so edit pages don't look squeezed. */
+.doc-header {
+  max-width: 1320px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 32px 40px 0 !important;
+}
+
+.doc-header__title,
+.doc-header h1 {
+  font-size: 28px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.022em !important;
+  line-height: 1.15 !important;
+  color: var(--theme-elevation-1000) !important;
+  margin: 0 !important;
+}
+
+/* M2. Selects + inputs inside array-field rows lose contrast.
+   Light theme: card is elevation-0 (surface-50 ~98.5% L), inputs default
+   to white (100% L) — only ~1.7pp difference. Use a stronger border
+   (elevation-250 ≈ 90% L) so each control reads as a discrete chip
+   against the card. Keeping bg white preserves Linear/Vercel feel. */
+.array-field__row .collapsible__content .rs__control,
+.array-field__row .collapsible__content input:not([type='checkbox']):not([type='radio']):not([type='hidden']),
+.array-field__row .collapsible__content textarea,
+.array-field__row .collapsible__content select,
+.blocks-field__row .collapsible__content .rs__control,
+.blocks-field__row .collapsible__content input:not([type='checkbox']):not([type='radio']):not([type='hidden']),
+.blocks-field__row .collapsible__content textarea,
+.blocks-field__row .collapsible__content select {
+  border-color: var(--theme-elevation-250) !important;
+  box-shadow: 0 1px 2px -1px oklch(0% 0 0 / 0.06) !important;
+}
+
+[data-theme='dark'] .array-field__row .collapsible__content .rs__control,
+[data-theme='dark'] .array-field__row .collapsible__content input:not([type='checkbox']):not([type='radio']):not([type='hidden']),
+[data-theme='dark'] .array-field__row .collapsible__content textarea,
+[data-theme='dark'] .array-field__row .collapsible__content select,
+[data-theme='dark'] .blocks-field__row .collapsible__content .rs__control,
+[data-theme='dark'] .blocks-field__row .collapsible__content input:not([type='checkbox']):not([type='radio']):not([type='hidden']),
+[data-theme='dark'] .blocks-field__row .collapsible__content textarea,
+[data-theme='dark'] .blocks-field__row .collapsible__content select {
+  background: var(--theme-elevation-100) !important;
+  border-color: var(--theme-elevation-300) !important;
+  box-shadow: none !important;
+}
+
+/* M3. List-view + form checkboxes were rendering "three dots" — the
+   native <input type=checkbox> was being styled (16x16, border, bg)
+   on top of the .checkbox-input__input div (18x18, border, bg). Two
+   overlapping rounded squares with a 1px offset = visual artifact.
+   Suppress the native input's own surface; the wrapper div is the
+   styled target, and `.checkbox-input__icon` holds the check SVG. */
+.checkbox-input .checkbox-input__input input[type='checkbox'] {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 1;
+}
+
+/* When Payload renders an inline SVG check inside .checkbox-input__icon,
+   make it visible when the parent is checked. */
+.checkbox-input--checked .checkbox-input__icon {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  color: var(--theme-elevation-0);
+  pointer-events: none;
+}
+
+.checkbox-input--checked .checkbox-input__icon svg {
+  width: 14px;
+  height: 14px;
+  stroke: var(--theme-elevation-0);
+  fill: none;
+}
+
+.checkbox-input--checked .checkbox-input__icon .stroke {
+  stroke: var(--theme-elevation-0);
+  stroke-width: 2;
+}
+
+/* Hide the .checkbox-input__input::after we previously drew with
+   clip-path — the inline SVG icon now handles the checkmark. Keeping
+   both would double-draw the glyph. */
+.checkbox-input--checked .checkbox-input__input::after {
+  content: none !important;
+}
+
+/* Same fix for Payload-stock radio inputs — the native <input> sits on
+   top of the styled .radio-input__styled-radio span. Hide the native
+   element; the span is the visible target. */
+.radio-input input[type='radio'] {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.radio-input {
+  position: relative;
+}
+
+.radio-input label,
+.radio-input > label {
+  position: relative;
+}
