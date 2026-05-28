@@ -3,24 +3,17 @@ import React from 'react'
 const Logo: React.FC = () => (
   <div className="custom-logo">
     <svg
-      width="36"
-      height="36"
-      viewBox="0 0 36 36"
+      width="28"
+      height="28"
+      viewBox="0 0 32 32"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden
     >
-      <defs>
-        <linearGradient id="logo-grad" x1="0" y1="0" x2="36" y2="36" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#6366F1" />
-          <stop offset="1" stopColor="#8B5CF6" />
-        </linearGradient>
-      </defs>
-      <rect width="36" height="36" rx="8" fill="url(#logo-grad)" />
+      <rect width="32" height="32" rx="7" fill="currentColor" />
       <path
-        d="M10 12 L18 12 L18 24 L10 24 Z M22 12 L26 12 L26 16 L22 16 Z M22 20 L26 20 L26 24 L22 24 Z"
-        fill="white"
-        fillOpacity="0.95"
+        d="M9 9.5 L16 9.5 C19.59 9.5 22.5 12.41 22.5 16 C22.5 19.59 19.59 22.5 16 22.5 L9 22.5 Z M12.4 12.9 L12.4 19.1 L16 19.1 C17.71 19.1 19.1 17.71 19.1 16 C19.1 14.29 17.71 12.9 16 12.9 Z"
+        fill="var(--theme-elevation-0)"
       />
     </svg>
     <span className="custom-logo__wordmark">Studio</span>

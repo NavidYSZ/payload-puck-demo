@@ -1,55 +1,108 @@
 /* =====================================================================
-   Custom Admin Theme — shadcn-inspired refresh
-   Overrides Payload's default theme variables for a modern look.
+   Custom Admin Theme — neutral (Linear/Vercel inspired)
+   - Imports Tailwind's theme + utilities WITHOUT preflight
+     (preflight would reset Payload's nav/buttons and break the UI)
+   - Defines shadcn tokens (--background, --primary, etc.) for shadcn UI
+   - Overrides Payload's own theme tokens (--theme-*) to match
    ===================================================================== */
 
-/* Brand palette */
-:root {
-  --brand-50: oklch(96.5% 0.025 280deg);
-  --brand-100: oklch(93% 0.04 280deg);
-  --brand-200: oklch(86% 0.07 280deg);
-  --brand-300: oklch(78% 0.1 280deg);
-  --brand-400: oklch(68% 0.16 280deg);
-  --brand-500: oklch(58% 0.21 280deg);
-  --brand-600: oklch(50% 0.21 280deg);
-  --brand-700: oklch(42% 0.18 280deg);
-  --brand-800: oklch(34% 0.13 280deg);
-  --brand-900: oklch(26% 0.09 280deg);
+/* Full tailwind import — gets auto source detection.
+   We neutralize preflight's nav-breaking rules later in this file. */
+@import 'tailwindcss';
 
-  --surface-0: oklch(99.5% 0.002 264deg);
-  --surface-50: oklch(98% 0.003 264deg);
-  --surface-100: oklch(96% 0.004 264deg);
-  --surface-150: oklch(94% 0.005 264deg);
-  --surface-200: oklch(91% 0.006 264deg);
-  --surface-300: oklch(85% 0.008 264deg);
-  --surface-400: oklch(72% 0.012 264deg);
-  --surface-500: oklch(58% 0.014 264deg);
-  --surface-600: oklch(46% 0.014 264deg);
-  --surface-700: oklch(36% 0.012 264deg);
-  --surface-800: oklch(26% 0.01 264deg);
-  --surface-900: oklch(18% 0.008 264deg);
-  --surface-1000: oklch(12% 0.006 264deg);
+/* Make sure our admin + shadcn component files are scanned even if
+   Tailwind's default project root scan misses them in this nested context. */
+@source "../../components/admin/**/*.{ts,tsx}";
+@source "../../components/ui/**/*.{ts,tsx}";
+
+/* shadcn @theme inline so utility classes resolve from CSS variables */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+/* ---------------------------------------------------------------------
+   Neutral palette — light defaults
+   --------------------------------------------------------------------- */
+:root {
+  /* shadcn tokens */
+  --background: oklch(100% 0 0deg);
+  --foreground: oklch(14.5% 0 0deg);
+  --card: oklch(100% 0 0deg);
+  --card-foreground: oklch(14.5% 0 0deg);
+  --popover: oklch(100% 0 0deg);
+  --popover-foreground: oklch(14.5% 0 0deg);
+  --primary: oklch(14.5% 0 0deg);
+  --primary-foreground: oklch(98.5% 0 0deg);
+  --secondary: oklch(96% 0 0deg);
+  --secondary-foreground: oklch(20.5% 0 0deg);
+  --muted: oklch(96% 0 0deg);
+  --muted-foreground: oklch(50% 0 0deg);
+  --accent: oklch(96% 0 0deg);
+  --accent-foreground: oklch(20.5% 0 0deg);
+  --destructive: oklch(57.7% 0.245 27.325deg);
+  --destructive-foreground: oklch(98.5% 0 0deg);
+  --border: oklch(92% 0 0deg);
+  --input: oklch(92% 0 0deg);
+  --ring: oklch(70.8% 0 0deg);
+  --radius: 0.625rem;
+
+  /* Surface scale — pure neutral grays */
+  --surface-0: oklch(100% 0 0deg);
+  --surface-50: oklch(98.5% 0 0deg);
+  --surface-100: oklch(96.5% 0 0deg);
+  --surface-150: oklch(94.5% 0 0deg);
+  --surface-200: oklch(92% 0 0deg);
+  --surface-300: oklch(86% 0 0deg);
+  --surface-400: oklch(72% 0 0deg);
+  --surface-500: oklch(55% 0 0deg);
+  --surface-600: oklch(43% 0 0deg);
+  --surface-700: oklch(32% 0 0deg);
+  --surface-800: oklch(22% 0 0deg);
+  --surface-900: oklch(15% 0 0deg);
+  --surface-1000: oklch(9% 0 0deg);
 }
 
 [data-theme='light'] {
   --theme-bg: var(--surface-50);
   --theme-text: var(--surface-1000);
   --theme-input-bg: var(--surface-0);
-  --theme-border-color: oklch(91% 0.006 264deg);
+  --theme-border-color: oklch(92% 0 0deg);
 
   --theme-elevation-0: var(--surface-50);
   --theme-elevation-50: var(--surface-0);
   --theme-elevation-100: var(--surface-100);
   --theme-elevation-150: var(--surface-150);
   --theme-elevation-200: var(--surface-200);
-  --theme-elevation-250: oklch(89% 0.007 264deg);
+  --theme-elevation-250: oklch(90% 0 0deg);
   --theme-elevation-300: var(--surface-300);
   --theme-elevation-400: var(--surface-400);
   --theme-elevation-500: var(--surface-500);
   --theme-elevation-600: var(--surface-600);
   --theme-elevation-700: var(--surface-700);
   --theme-elevation-800: var(--surface-800);
-  --theme-elevation-850: oklch(22% 0.009 264deg);
+  --theme-elevation-850: oklch(18% 0 0deg);
   --theme-elevation-900: var(--surface-900);
   --theme-elevation-1000: var(--surface-1000);
 
@@ -69,27 +122,52 @@
   --theme-error-750: oklch(46% 0.19 25deg);
 }
 
+/* ---------------------------------------------------------------------
+   Dark mode — neutral, slightly warm-cool-balanced
+   --------------------------------------------------------------------- */
 [data-theme='dark'] {
-  --theme-bg: var(--surface-1000);
-  --theme-text: var(--surface-50);
-  --theme-input-bg: var(--surface-900);
-  --theme-border-color: oklch(28% 0.01 264deg);
+  /* shadcn tokens — dark */
+  --background: oklch(11% 0 0deg);
+  --foreground: oklch(98.5% 0 0deg);
+  --card: oklch(14% 0 0deg);
+  --card-foreground: oklch(98.5% 0 0deg);
+  --popover: oklch(14% 0 0deg);
+  --popover-foreground: oklch(98.5% 0 0deg);
+  --primary: oklch(98.5% 0 0deg);
+  --primary-foreground: oklch(14.5% 0 0deg);
+  --secondary: oklch(22% 0 0deg);
+  --secondary-foreground: oklch(98.5% 0 0deg);
+  --muted: oklch(22% 0 0deg);
+  --muted-foreground: oklch(68% 0 0deg);
+  --accent: oklch(22% 0 0deg);
+  --accent-foreground: oklch(98.5% 0 0deg);
+  --destructive: oklch(70% 0.19 22deg);
+  --destructive-foreground: oklch(98.5% 0 0deg);
+  --border: oklch(22% 0 0deg);
+  --input: oklch(22% 0 0deg);
+  --ring: oklch(44% 0 0deg);
 
-  --theme-elevation-0: var(--surface-1000);
-  --theme-elevation-50: var(--surface-900);
-  --theme-elevation-100: oklch(16% 0.007 264deg);
-  --theme-elevation-150: oklch(19% 0.008 264deg);
-  --theme-elevation-200: oklch(22% 0.009 264deg);
-  --theme-elevation-250: oklch(25% 0.01 264deg);
-  --theme-elevation-300: oklch(30% 0.011 264deg);
-  --theme-elevation-400: oklch(40% 0.012 264deg);
-  --theme-elevation-500: oklch(52% 0.013 264deg);
-  --theme-elevation-600: oklch(62% 0.012 264deg);
-  --theme-elevation-700: oklch(72% 0.01 264deg);
-  --theme-elevation-800: oklch(82% 0.008 264deg);
-  --theme-elevation-850: oklch(87% 0.006 264deg);
-  --theme-elevation-900: oklch(92% 0.005 264deg);
-  --theme-elevation-1000: var(--surface-50);
+  /* Payload tokens */
+  --theme-bg: oklch(11% 0 0deg);
+  --theme-text: oklch(98% 0 0deg);
+  --theme-input-bg: oklch(14% 0 0deg);
+  --theme-border-color: oklch(22% 0 0deg);
+
+  --theme-elevation-0: oklch(11% 0 0deg);
+  --theme-elevation-50: oklch(14% 0 0deg);
+  --theme-elevation-100: oklch(16% 0 0deg);
+  --theme-elevation-150: oklch(18% 0 0deg);
+  --theme-elevation-200: oklch(22% 0 0deg);
+  --theme-elevation-250: oklch(25% 0 0deg);
+  --theme-elevation-300: oklch(30% 0 0deg);
+  --theme-elevation-400: oklch(40% 0 0deg);
+  --theme-elevation-500: oklch(52% 0 0deg);
+  --theme-elevation-600: oklch(62% 0 0deg);
+  --theme-elevation-700: oklch(74% 0 0deg);
+  --theme-elevation-800: oklch(84% 0 0deg);
+  --theme-elevation-850: oklch(89% 0 0deg);
+  --theme-elevation-900: oklch(94% 0 0deg);
+  --theme-elevation-1000: oklch(98.5% 0 0deg);
 
   --theme-success-50: oklch(20% 0.05 155deg);
   --theme-success-100: oklch(28% 0.08 155deg);
@@ -107,6 +185,9 @@
   --theme-error-750: oklch(78% 0.18 25deg);
 }
 
+/* ---------------------------------------------------------------------
+   Typography
+   --------------------------------------------------------------------- */
 :root,
 [data-theme] {
   --font-body:
@@ -126,57 +207,80 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
 }
 
+/* ---------------------------------------------------------------------
+   Payload UI overrides — neutralized
+   --------------------------------------------------------------------- */
+
 .custom-logo {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   user-select: none;
 }
 
 .custom-logo__wordmark {
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--theme-elevation-1000);
   line-height: 1;
 }
 
-/* Inputs & buttons — rounder, softer */
-.btn,
+/* Inputs */
 .field-type input,
 .field-type textarea,
 .field-type select,
 [class*='input__'] input,
 [class*='input__'] textarea {
   border-radius: 8px !important;
+  transition: border-color 120ms ease, box-shadow 120ms ease !important;
+}
+
+.field-type input:focus,
+.field-type textarea:focus,
+.field-type select:focus,
+[class*='input__'] input:focus,
+[class*='input__'] textarea:focus {
+  outline: none !important;
+  border-color: var(--theme-elevation-1000) !important;
+  box-shadow: 0 0 0 3px oklch(0% 0 0 / 0.08) !important;
+}
+
+[data-theme='dark'] .field-type input:focus,
+[data-theme='dark'] .field-type textarea:focus,
+[data-theme='dark'] .field-type select:focus {
+  border-color: var(--theme-elevation-700) !important;
+  box-shadow: 0 0 0 3px oklch(100% 0 0 / 0.08) !important;
+}
+
+/* Buttons — flat, monochrome */
+.btn,
+button[type='submit'] {
+  border-radius: 8px !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.005em;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease !important;
 }
 
 .btn--style-primary,
 button[type='submit']:not(.btn--style-secondary):not(.btn--style-tertiary):not(.btn--style-icon-label) {
-  background: linear-gradient(135deg, var(--brand-500), var(--brand-600)) !important;
-  border-color: transparent !important;
-  color: white !important;
-  font-weight: 500 !important;
-  transition: all 180ms ease !important;
-  box-shadow:
-    0 1px 2px 0 oklch(58% 0.21 280deg / 0.15),
-    0 0 0 1px oklch(58% 0.21 280deg / 0.05) inset;
+  background: var(--theme-elevation-1000) !important;
+  border-color: var(--theme-elevation-1000) !important;
+  color: var(--theme-elevation-0) !important;
+  box-shadow: none !important;
 }
 
 .btn--style-primary:hover,
 button[type='submit']:not(.btn--style-secondary):not(.btn--style-tertiary):not(.btn--style-icon-label):hover {
-  background: linear-gradient(135deg, var(--brand-600), var(--brand-700)) !important;
-  transform: translateY(-1px);
-  box-shadow:
-    0 4px 12px 0 oklch(58% 0.21 280deg / 0.25),
-    0 0 0 1px oklch(58% 0.21 280deg / 0.1) inset;
+  background: var(--theme-elevation-800) !important;
+  border-color: var(--theme-elevation-800) !important;
+  transform: none;
 }
 
 .btn--style-secondary {
-  border-radius: 8px !important;
   border: 1px solid var(--theme-border-color) !important;
-  background: var(--theme-elevation-50) !important;
-  transition: all 150ms ease !important;
+  background: var(--theme-elevation-0) !important;
+  color: var(--theme-elevation-900) !important;
 }
 
 .btn--style-secondary:hover {
@@ -184,92 +288,19 @@ button[type='submit']:not(.btn--style-secondary):not(.btn--style-tertiary):not(.
   border-color: var(--theme-elevation-300) !important;
 }
 
-/* Focus rings */
-.field-type input:focus,
-.field-type textarea:focus,
-.field-type select:focus,
-[class*='input__'] input:focus,
-[class*='input__'] textarea:focus {
-  outline: none !important;
-  border-color: var(--brand-400) !important;
-  box-shadow: 0 0 0 3px oklch(58% 0.21 280deg / 0.18) !important;
-}
+/* (Stock Payload .nav__* styles removed — replaced by custom SidebarNav at .admin-shell) */
 
-/* Nav */
-.nav {
-  background: var(--theme-elevation-0) !important;
-  border-right: 1px solid var(--theme-border-color) !important;
-}
-
-.nav__wrapper {
-  padding-top: 16px !important;
-}
-
-.nav__link {
-  border-radius: 8px !important;
-  margin: 2px 8px !important;
-  padding: 8px 12px !important;
-  font-weight: 500 !important;
-  transition: all 120ms ease !important;
-  color: var(--theme-elevation-700) !important;
-}
-
-.nav__link:hover {
-  background: var(--theme-elevation-100) !important;
-  color: var(--theme-elevation-1000) !important;
-}
-
-.nav__link--active,
-.nav__link--active:hover {
-  background: var(--brand-50) !important;
-  color: var(--brand-700) !important;
-}
-
-[data-theme='dark'] .nav__link--active,
-[data-theme='dark'] .nav__link--active:hover {
-  background: oklch(28% 0.12 280deg) !important;
-  color: oklch(85% 0.07 280deg) !important;
-}
-
-.nav__label {
-  text-transform: uppercase;
-  font-size: 11px !important;
-  letter-spacing: 0.06em;
-  color: var(--theme-elevation-500) !important;
-  font-weight: 600 !important;
-  padding: 16px 16px 8px !important;
-}
-
-/* Header */
+/* Hide Payload's stock AppHeader entirely. Our sidebar carries brand + user card,
+   so the stock header is redundant and showed a wrong-user Gravatar. */
 .app-header {
-  background: var(--theme-elevation-0) !important;
-  border-bottom: 1px solid var(--theme-border-color) !important;
-  backdrop-filter: blur(8px);
+  display: none !important;
 }
 
-/* Dashboard */
-.dashboard__group,
-.dashboard__card {
-  border-radius: 12px !important;
-  background: var(--theme-elevation-50) !important;
-  border: 1px solid var(--theme-border-color) !important;
-  transition: all 200ms ease;
-}
-
-.dashboard__group:hover,
-.dashboard__card:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 8px 24px -8px oklch(0% 0 0 / 0.08),
-    0 2px 6px -2px oklch(0% 0 0 / 0.04);
-  border-color: var(--brand-300) !important;
-}
-
-/* Tables */
+/* Tables — flat, light borders */
 .collection-list__table,
 .collection-list table,
 table {
-  border-radius: 12px !important;
+  border-radius: 10px !important;
   overflow: hidden;
   border: 1px solid var(--theme-border-color);
 }
@@ -278,50 +309,57 @@ thead tr {
   background: var(--theme-elevation-50) !important;
 }
 
+thead th {
+  font-weight: 600 !important;
+  font-size: 12px !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  color: var(--theme-elevation-600) !important;
+}
+
 tbody tr {
-  transition: background 100ms ease;
+  transition: background 80ms ease;
 }
 
 tbody tr:hover {
   background: var(--theme-elevation-50) !important;
 }
 
-/* Pills / status badges */
+/* Pills */
 .pill {
-  border-radius: 999px !important;
+  border-radius: 6px !important;
   font-weight: 500 !important;
-  letter-spacing: 0.01em;
+  letter-spacing: 0 !important;
+  font-size: 11.5px !important;
 }
 
 /* Tooltips */
 .tooltip {
   border-radius: 6px !important;
   font-weight: 500 !important;
+  font-size: 12px !important;
   box-shadow:
-    0 8px 24px -4px oklch(0% 0 0 / 0.18),
-    0 2px 6px -2px oklch(0% 0 0 / 0.08) !important;
+    0 8px 24px -4px oklch(0% 0 0 / 0.14),
+    0 2px 6px -2px oklch(0% 0 0 / 0.06) !important;
 }
 
-/* Login screen polish */
+/* Login screen — clean, no gradients */
 .template-default--login,
 .login {
-  background:
-    radial-gradient(ellipse at top right, oklch(58% 0.21 280deg / 0.08), transparent 60%),
-    radial-gradient(ellipse at bottom left, oklch(50% 0.18 220deg / 0.06), transparent 60%),
-    var(--theme-bg) !important;
+  background: var(--theme-bg) !important;
 }
 
 .login__wrap {
   background: var(--theme-elevation-0) !important;
-  border-radius: 16px !important;
+  border-radius: 14px !important;
   border: 1px solid var(--theme-border-color);
   box-shadow:
-    0 20px 60px -20px oklch(0% 0 0 / 0.12),
-    0 4px 16px -4px oklch(0% 0 0 / 0.06);
+    0 1px 0 oklch(0% 0 0 / 0.02),
+    0 12px 32px -12px oklch(0% 0 0 / 0.08);
   padding: 32px !important;
 }
 
-/* Scrollbars (WebKit) */
+/* Scrollbars */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
@@ -336,4 +374,502 @@ tbody tr:hover {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--theme-elevation-400);
+}
+
+/* ---------------------------------------------------------------------
+   Custom Dashboard layer
+   Resets Payload's default-dashboard padding so our custom view owns it
+   --------------------------------------------------------------------- */
+.dashboard {
+  padding: 0 !important;
+}
+
+.dashboard__group,
+.dashboard__card {
+  /* Killed — we use our own card surfaces inside the custom dashboard */
+  all: unset;
+}
+
+/* ---------------------------------------------------------------------
+   Scoped Tailwind/shadcn reset (in @layer base so Tailwind utilities,
+   which live in @layer utilities, can still override these defaults
+   when applied as classes — otherwise `text-background` etc. get beaten
+   by `a { color: inherit }`).
+   --------------------------------------------------------------------- */
+@layer base {
+  .dashboard-shell,
+  .admin-shell {
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    h1, h2, h3, h4, h5, h6, p {
+      margin: 0;
+    }
+
+    ul, ol {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    button {
+      background: transparent;
+      border: 0;
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img, svg, video {
+      display: block;
+      max-width: 100%;
+    }
+  }
+}
+
+/* =====================================================================
+   Critical fixes from UI audit (2026-05-28)
+   - Restore the Payload chrome that Tailwind preflight wiped
+   - Lay the custom sidebar into the page (Payload's default template
+     uses display:grid with a 0px first track — we override to flex)
+   - Standard content gutters
+   ===================================================================== */
+
+/* 1. Make the layout actually allocate a column for our 240px sidebar.
+      Payload's stock .template-default uses display:grid with
+      grid-template-columns: 0 1fr — designed for its own collapsible nav.
+      We override to flex so our <aside class="admin-shell"> sits next to
+      .template-default__wrap. */
+.template-default {
+  display: flex !important;
+  min-height: 100vh;
+  align-items: stretch;
+}
+
+.template-default__wrap {
+  flex: 1 1 auto;
+  min-width: 0;            /* prevent flex children from forcing overflow */
+  background: var(--theme-bg);
+}
+
+/* Hide Payload's mobile nav toggler — only relevant for its own collapsible nav */
+.template-default__nav-toggler-wrapper {
+  display: none !important;
+}
+
+/* 2. Restore Payload form & list chrome that Tailwind preflight nuked.
+      Preflight set `*, *::before, *::after { padding: 0; border: 0; margin: 0 }`
+      which stripped all of these. We re-establish sensible defaults
+      using Payload's theme tokens so they match the rest of the admin. */
+
+/* Doc-controls bar (top bar on edit views — has Save / Edit/API tabs) */
+.doc-controls {
+  padding: 12px 24px !important;
+  border-bottom: 1px solid var(--theme-border-color);
+  background: var(--theme-elevation-0);
+}
+
+.doc-controls__controls {
+  gap: 8px;
+}
+
+/* "Create new" pill and other pill buttons */
+.btn--style-pill {
+  padding: 6px 14px !important;
+  border-radius: 999px !important;
+}
+
+/* All buttons get sane defaults */
+.btn:not(.dashboard-shell .btn):not(.admin-shell .btn) {
+  padding: 6px 14px !important;
+}
+
+/* Form fields */
+.field-type {
+  margin-bottom: 16px;
+}
+
+.field-type input,
+.field-type textarea,
+.field-type select {
+  padding: 8px 12px !important;
+  border: 1px solid var(--theme-border-color) !important;
+  background: var(--theme-input-bg) !important;
+  width: 100%;
+}
+
+.field-label,
+.field-type label {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  display: inline-block;
+  color: var(--theme-elevation-800);
+}
+
+/* Native checkboxes / radios that Payload styled — restore them */
+.checkbox-input {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.checkbox-input input[type='checkbox'] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--theme-border-color) !important;
+  border-radius: 4px !important;
+  background: var(--theme-elevation-0) !important;
+  padding: 0 !important;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.checkbox-input input[type='checkbox']:checked {
+  background: var(--theme-elevation-1000) !important;
+  border-color: var(--theme-elevation-1000) !important;
+}
+
+.checkbox-input input[type='checkbox']:checked::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  background: var(--theme-elevation-0);
+  clip-path: polygon(14% 50%, 42% 78%, 86% 24%, 76% 14%, 42% 58%, 24% 40%);
+}
+
+/* Radio groups */
+.radio-input input[type='radio'] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid var(--theme-border-color) !important;
+  border-radius: 999px !important;
+  background: var(--theme-elevation-0) !important;
+  padding: 0 !important;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.radio-input input[type='radio']:checked {
+  border-color: var(--theme-elevation-1000) !important;
+}
+
+.radio-input input[type='radio']:checked::after {
+  content: '';
+  position: absolute;
+  inset: 3px;
+  border-radius: 999px;
+  background: var(--theme-elevation-1000);
+}
+
+/* =====================================================================
+   Dashboard-matched proportions for list + edit views
+   The custom Dashboard uses `mx-auto max-w-[1240px] px-6 py-8 lg:px-10
+   lg:py-10` for its container. We replicate the same vertical rhythm,
+   gutters, title sizing, and card-style table wrapper on every other
+   Payload page so the entire admin feels like one product.
+   ===================================================================== */
+
+/* Outer container — centered, 1320px max, generous padding */
+.collection-list,
+.global-edit,
+.collection-edit,
+.account-edit,
+.dashboard__sub-wrapper,
+.versions {
+  max-width: 1320px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 32px 40px 48px !important;
+}
+
+/* Drop Payload's inner gutter — the outer container already pads */
+.collection-list__wrap,
+.collection-list .gutter,
+.global-edit .gutter,
+.collection-edit .gutter {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* List header — bigger title, more breathing room */
+.list-header {
+  padding: 0 0 24px 0 !important;
+  border-bottom: none !important;
+}
+
+.list-header__title,
+.list-header h1,
+.collection-list h1,
+.global-edit h1 {
+  font-size: 28px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.022em;
+  line-height: 1.15;
+}
+
+.list-header__content {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* Search + filter row */
+.list-controls {
+  padding: 0 0 16px 0 !important;
+  gap: 12px;
+}
+
+.search-bar,
+.search-filter {
+  flex: 1 1 auto;
+  position: relative;
+}
+
+.search-filter__input {
+  padding: 9px 12px 9px 36px !important;
+  border: 1px solid var(--theme-border-color) !important;
+  background: var(--theme-elevation-0) !important;
+  border-radius: 10px !important;
+  height: 40px;
+  font-size: 14px;
+  width: 100%;
+}
+
+/* Tables → frame the whole tables block as a card */
+.collection-list__tables,
+.collection-list .table-wrap {
+  border-radius: 12px;
+  border: 1px solid var(--theme-border-color);
+  background: var(--theme-elevation-0);
+  overflow: hidden;
+}
+
+/* Payload wraps its <table> in an extra <div class="table"> with
+   display:table. Without a width that div is shrink-to-fit, which is
+   what made the table appear ~764px wide inside a 1120px card. */
+.collection-list__tables > .table,
+.collection-list .table-wrap > .table {
+  width: 100% !important;
+}
+
+/* Inside the card, the raw <table> shouldn't add its own border */
+.collection-list table,
+.collection-list table.table,
+.table-wrap > table {
+  border: 0 !important;
+  border-radius: 0 !important;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: auto;
+}
+
+/* ==== TABLE COLUMN WIDTHS — Option A: table-layout fixed + explicit widths ==== */
+.collection-list table {
+  table-layout: fixed !important;
+}
+
+.collection-list table th,
+.collection-list table td {
+  min-width: 0 !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Checkbox column — narrow */
+.collection-list table [id="heading-_select"],
+.collection-list table .cell-_select {
+  width: 44px;
+}
+
+/* Title-like columns — explicit but generous */
+.collection-list table [id="heading-title"],
+.collection-list table .cell-title,
+.collection-list table [id="heading-name"],
+.collection-list table .cell-name,
+.collection-list table [id="heading-filename"],
+.collection-list table .cell-filename {
+  width: auto;
+}
+
+/* Slug */
+.collection-list table [id="heading-slug"],
+.collection-list table .cell-slug {
+  width: 220px;
+}
+
+/* Email */
+.collection-list table [id="heading-email"],
+.collection-list table .cell-email {
+  width: 280px;
+}
+
+/* Status pill column */
+.collection-list table [id="heading-_status"],
+.collection-list table .cell-_status {
+  width: 130px;
+}
+
+/* Timestamps */
+.collection-list table [id="heading-updatedAt"],
+.collection-list table .cell-updatedAt,
+.collection-list table [id="heading-createdAt"],
+.collection-list table .cell-createdAt {
+  width: 180px;
+  color: var(--theme-elevation-600);
+  font-variant-numeric: tabular-nums;
+}
+
+.collection-list table thead,
+table.table thead {
+  background: var(--theme-elevation-50);
+}
+
+.collection-list table thead th,
+table.table thead th {
+  padding: 12px 16px !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  color: var(--theme-elevation-600) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--theme-elevation-150) !important;
+  text-align: left;
+  background: var(--theme-elevation-50) !important;
+}
+
+.collection-list table tbody td,
+table.table tbody td {
+  padding: 14px 16px !important;
+  border-bottom: 1px solid var(--theme-elevation-100) !important;
+  font-size: 14px;
+  color: var(--theme-elevation-900);
+  vertical-align: middle;
+}
+
+.collection-list table tbody tr:last-child td,
+table.table tbody tr:last-child td {
+  border-bottom: 0 !important;
+}
+
+.collection-list table tbody tr,
+table.table tbody tr {
+  transition: background 100ms ease;
+}
+
+.collection-list table tbody tr:hover,
+table.table tbody tr:hover {
+  background: var(--theme-elevation-50) !important;
+}
+
+/* Page controls (pagination + per-page) — side-by-side, no overlap */
+.page-controls {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 0 0 0 !important;
+  border-top: none;
+}
+
+.page-controls__page-info {
+  font-size: 13px;
+  color: var(--theme-elevation-600);
+}
+
+.per-page {
+  padding: 0 !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.per-page__btn,
+.per-page button {
+  padding: 6px 10px !important;
+  border: 1px solid var(--theme-border-color) !important;
+  border-radius: 8px !important;
+  background: var(--theme-elevation-0) !important;
+  font-size: 13px;
+  color: var(--theme-elevation-800);
+}
+
+/* Doc tabs (Edit / API on edit views) */
+.doc-tabs {
+  border-bottom: 1px solid var(--theme-border-color);
+  margin-bottom: 24px;
+}
+
+.doc-tabs__tabs {
+  gap: 4px;
+  padding: 0;
+}
+
+.doc-tabs__tab {
+  padding: 10px 14px !important;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--theme-elevation-600);
+  border-bottom: 2px solid transparent;
+}
+
+.doc-tabs__tab--active {
+  color: var(--theme-elevation-1000) !important;
+  border-bottom-color: var(--theme-elevation-1000) !important;
+}
+
+/* Document title bar (edit views) */
+.collection-edit__header,
+.global-edit__header,
+.doc-header {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--theme-border-color);
+  margin-bottom: 24px;
+}
+
+/* Section titles in the bottom action area */
+.list-header__sub-header {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+/* Folder-list (for collections with folders enabled) inherits same look */
+.folder-list__wrap {
+  border-radius: 12px;
+  border: 1px solid var(--theme-border-color);
+  background: var(--theme-elevation-0);
+  padding: 8px;
+}
+
+/* Array / repeater fields */
+.array-field__add-button,
+.blocks-field__add-button {
+  padding: 8px 14px !important;
+  border: 1px dashed var(--theme-border-color) !important;
+  border-radius: 8px !important;
+  background: var(--theme-elevation-50) !important;
+  font-size: 13px;
+  color: var(--theme-elevation-700);
+  width: 100%;
+}
+
+.array-field__add-button:hover,
+.blocks-field__add-button:hover {
+  background: var(--theme-elevation-100) !important;
+  border-color: var(--theme-elevation-300) !important;
 }

@@ -28,6 +28,7 @@ import { ReindexButton as ReindexButton_aead06e4cbf6b2620c5c51c9ab283634 } from 
 import { FolderTypeField as FolderTypeField_2b8867833a34864a02ddf429b0728a40 } from '@payloadcms/next/client'
 import { RowLabel as RowLabel_ec255a65fa6fa8d1faeb09cf35284224 } from '@/Header/RowLabel'
 import { RowLabel as RowLabel_1f6ff6ff633e3695d348f4f3c58f1466 } from '@/Footer/RowLabel'
+import { default as default_fc5b0232cf9438114a8d40b64f6540c6 } from '@/components/admin/SidebarNav'
 import { LogoutButton as LogoutButton_aa8e4427b70b37c7820895ace344eb78 } from '@delmaredigital/payload-better-auth/components'
 import { default as default_534076e2c753ea5d539a54b05f456b1b } from '@/components/admin/Icon'
 import { default as default_a44df17d0fc3dcd873dae43dc3bf66bd } from '@/components/admin/Logo'
@@ -36,6 +37,7 @@ import { PageTreeNavLink as PageTreeNavLink_11b13d26a0022dae5ea66a055ed30952 } f
 import { BeforeLogin as BeforeLogin_aa8e4427b70b37c7820895ace344eb78 } from '@delmaredigital/payload-better-auth/components'
 import { default as default_116afe01689361f25bab019beee1ee0a } from '@/components/admin/PuckProvider'
 import { VercelBlobClientUploadHandler as VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e } from '@payloadcms/storage-vercel-blob/client'
+import { default as default_0e7b23c75ea046975e1784ba01f82886 } from '@/components/admin/Dashboard'
 import { LoginViewWrapper as LoginViewWrapper_76e4fd5e0c2ccc05732c17408c72107e } from '@delmaredigital/payload-better-auth/rsc'
 import { ApiKeysView as ApiKeysView_6234f869b6abd89bf631f5883bc67bd5 } from '@delmaredigital/payload-better-auth/rsc/api-key'
 import { PuckEditorView as PuckEditorView_3b27b37268b8e78cccc06ea6de889aa6 } from '@delmaredigital/payload-puck/rsc'
@@ -74,6 +76,7 @@ export const importMap = {
   "@payloadcms/next/client#FolderTypeField": FolderTypeField_2b8867833a34864a02ddf429b0728a40,
   "@/Header/RowLabel#RowLabel": RowLabel_ec255a65fa6fa8d1faeb09cf35284224,
   "@/Footer/RowLabel#RowLabel": RowLabel_1f6ff6ff633e3695d348f4f3c58f1466,
+  "@/components/admin/SidebarNav#default": default_fc5b0232cf9438114a8d40b64f6540c6,
   "@delmaredigital/payload-better-auth/components#LogoutButton": LogoutButton_aa8e4427b70b37c7820895ace344eb78,
   "@/components/admin/Icon#default": default_534076e2c753ea5d539a54b05f456b1b,
   "@/components/admin/Logo#default": default_a44df17d0fc3dcd873dae43dc3bf66bd,
@@ -82,6 +85,7 @@ export const importMap = {
   "@delmaredigital/payload-better-auth/components#BeforeLogin": BeforeLogin_aa8e4427b70b37c7820895ace344eb78,
   "@/components/admin/PuckProvider#default": default_116afe01689361f25bab019beee1ee0a,
   "@payloadcms/storage-vercel-blob/client#VercelBlobClientUploadHandler": VercelBlobClientUploadHandler_16c82c5e25f430251a3e3ba57219ff4e,
+  "@/components/admin/Dashboard#default": default_0e7b23c75ea046975e1784ba01f82886,
   "@delmaredigital/payload-better-auth/rsc#LoginViewWrapper": LoginViewWrapper_76e4fd5e0c2ccc05732c17408c72107e,
   "@delmaredigital/payload-better-auth/rsc/api-key#ApiKeysView": ApiKeysView_6234f869b6abd89bf631f5883bc67bd5,
   "@delmaredigital/payload-puck/rsc#PuckEditorView": PuckEditorView_3b27b37268b8e78cccc06ea6de889aa6,

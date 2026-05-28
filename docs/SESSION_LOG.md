@@ -1,91 +1,104 @@
 # Session Log
 
-> Stand der Arbeit zu diesem Zeitpunkt. Letzte Nachricht des Assistenten wörtlich am Ende.
+> Lebendige Projektzusammenfassung. Was gebaut wurde, welche Entscheidungen getroffen sind, was als nächstes kommt.
+
+Stand: **2026-05-28**
 
 ---
 
-## Was bisher passiert ist
+## Drei-Phasen-Plan
 
-### 1. Setup
-- Geklont vom Template `delmaredigital/dd-starter` (Payload CMS 3 + Puck + Page-Tree + Better Auth)
-- Lokaler Postgres via `docker-compose up -d postgres` (Container `payloadpuckdemo-postgres-1`, Port `54320`, DB `ddstarter`)
-- Dependencies via `pnpm install` (Next.js 16, Payload 3.84, React 19)
-- `.env.local` + `.env` mit Secrets generiert (Port 3000 belegt → läuft auf 3002)
-- Dev-Server läuft auf http://localhost:3002
-
-### 2. Code-Evaluation
-- Architektur durchgegangen, Erweiterungs-Punkte identifiziert (Custom Puck Components, Layouts, Theming, Collections)
-- Bewertung: **Einfach** für Components / Theming / neue Collections; **Medium** für Puck-Anpassungen via SSR-Paare; **Schwer** für tiefe Editor-Eingriffe oder das Verlassen von Puck
-
-### 3. AI-Integration dokumentiert
-- Datei: [AI_INTEGRATION.md](./AI_INTEGRATION.md)
-- Kernerkenntnis: Eingebaute AI-Integration ist an **Puck Cloud (puckeditor.com)** gekoppelt
-- Für eigene KIs (Claude/GPT) **Pfad A** dokumentiert: dünner Layer auf Payload REST + Schema-Endpoint + Tool-Use
-- Drei konkrete Code-Beispiele drin (Smoke-Test, Claude mit Tool Use, Page editieren via AI)
-- Better Auth API Keys für AI-Auth (`@better-auth/api-key` ist bereits installiert)
-
-### 4. Editor-Optionen verglichen
-- Datei: [EDITOR_OPTIONS.md](./EDITOR_OPTIONS.md)
-- Vergleich Puck vs. GrapesJS vs. Eigenbau
-- Empfehlung: **Puck behalten und ausbauen** (2–3 Wochen für Elementor-ähnliches Gefühl, ohne Plugin-Ökosystem aufzugeben)
-
-### 5. Admin-Visuals Phase 1 (shadcn-inspired Theming)
-- Neue Files:
-  - `src/components/admin/Logo.tsx` — Custom Logo (Gradient-Mark + "Studio" Wordmark)
-  - `src/components/admin/Icon.tsx` — Custom Icon (kompakter Gradient-Mark)
-- Modifiziert:
-  - `src/app/(payload)/custom.scss` — komplette Theme-Override (oklch Brand-Palette indigo/violett, weichere Rundungen, Hover-Animationen, Login-Polish, Dark Mode überarbeitet)
-  - `src/payload.config.ts` — `admin.components.graphics.Logo` + `Icon` verdrahtet
-  - `src/app/(payload)/admin/importMap.js` — auto-regeneriert
-- **Status**: Admin lädt mit HTTP 200 auf http://localhost:3002/admin
-
-### 6. Klarstellung shadcn-Status
-- User-Frage: "Ist das jetzt mit Shadcn?"
-- Ehrliche Antwort: **Nein, nicht im strengen Sinn.** Es ist shadcn-**inspiriertes Theming** (Designsprache, oklch-Tokens, ähnliche Rundungen), aber keine echten shadcn-Komponenten im Payload-Admin.
-- Nächster geplanter Schritt: **Phase 2 — Login Page mit echten shadcn-Komponenten ersetzen** (als Test-Case für "echte shadcn-Komponente in Payload-Slot")
+**Phase 1 — Backend modernisieren** ✅ Großteil fertig (diese Session)
+**Phase 2 — Puck Visual Builder überarbeiten** 🕓 Geplant nach Phase-1-Abschluss
+**Phase 3 — KI-Layer** 🔮 Zukunftsmusik (Erste Notizen in `AI_INTEGRATION.md`)
 
 ---
 
-## Letzte Nachricht des Assistenten
+## Setup-Stand
 
-> Ehrliche Antwort: **Nein, nicht im strengen Sinn.**
->
-> Was ich gemacht habe ist **shadcn-inspiriertes Theming** — Payload's CSS-Variablen so überschrieben dass es shadcn-ähnlich aussieht (gleiche Designsprache: oklch-Farben, weiche Rundungen, neutrale Surfaces, ähnliche Spacing-Tokens). Aber **keine einzige echte shadcn-Komponente** wird im Admin gerendert.
->
-> ## Warum nicht?
->
-> Payload's Admin ist ein eigenes React-Komponenten-System (`@payloadcms/ui`). Die Tabelle in der Collection-List, die Edit-Form, die Nav-Sidebar — alles sind Payload's eigene Komponenten mit eigenen CSS-Klassen. Du kannst nicht einfach `<Button>` aus shadcn dazwischen reinwerfen.
->
-> Was du mit echtem shadcn **kannst**:
-> - Ganze Slots **ersetzen** (Logo, Dashboard, Login Page, custom Field-Components, beforeNavLinks etc.) → da rendern wir frei React → kann shadcn sein
-> - Was du **nicht** ersetzen kannst: List-View-Tabellen, Edit-Form-Layout, Nav-Chrome
->
-> ## Zwei realistische Wege
->
-> **A) Was wir gerade haben behalten + echte shadcn in den Slots dazunehmen**
-> - Custom Logo bleibt, aber als shadcn-styled Component
-> - Login Page komplett ersetzen → reine shadcn-Komponenten (`<Card>`, `<Button>`, `<Input>`, `<Form>`)
-> - Custom Dashboard mit shadcn-Cards, Charts, etc.
-> - Custom Field-Components wo sinnvoll (Color Picker, Image Picker mit shadcn Dialog)
-> - → **Ergebnis**: ~60% der sichtbaren Oberfläche sind echte shadcn-Komponenten, der Rest matched visuell
->
-> **B) Separater Admin mit reinem shadcn**
-> - Eigene Next.js App neben dem Payload-Admin
-> - Redet via REST/GraphQL mit Payload
-> - 100% shadcn, 100% Kontrolle
-> - → 3–6 Wochen Aufwand, paralleler Wartungsaufwand
->
-> **Mein Vorschlag**: Pfad A. Wir bauen jetzt als nächstes konkret die Login Page mit echten shadcn-Komponenten — dann siehst du den Unterschied zwischen "shadcn-themed Payload" (jetzt) und "echte shadcn-Komponente in Payload-Slot" (Login). Das ist auch ein guter Test-Case.
->
-> Soll ich loslegen mit der Login Page?
+- Template: geklont von `delmaredigital/dd-starter` (Payload CMS 3 + Puck + Page Tree + Better Auth)
+- Postgres lokal via Docker: Container `payloadpuckdemo-postgres-1`, Port `54320`, DB `ddstarter`
+- Stack: Next.js 16 (App Router, Turbopack), React 19, Payload 3.84, Tailwind v4, shadcn/ui, Geist Font
+- Dev-Server: `pnpm dev` (HTTPS-Cert fällt evtl. auf HTTP zurück); aktuell auf Port 3002
+- Type-Check: `pnpm check`
+- Test-Admin (lokal): `dashboard-test@local.dev` / `DashboardTest_2026!` (role=admin, User ID 2)
 
 ---
 
-## Offene Punkte / Nächste Schritte
+## Phase 1 — Was diese Session passiert ist
 
-1. **Login Page mit echten shadcn-Komponenten** ersetzen (Phase 2, ~1 Tag)
-2. **Custom Dashboard** mit shadcn-Cards + KPIs (Phase 3, ~3 Tage)
-3. **Custom Navigation** (shadcn Sidebar) (Phase 4, ~2 Tage)
-4. **Field-Components** wo sinnvoll (Phase 5, ~2-3 Tage)
-5. **AI-Integration** — Schema-Endpoint + erstes Smoke-Test-Script (parallel)
-6. **Custom Puck Components** (5+ projektspezifische Bausteine für besseren Editor + bessere AI-Outputs)
+### Style-Entscheidung
+Neutrale Palette (schwarz/weiß/grau, Linear/Vercel-Vibe). Indigo/Violett-Theme der vorherigen Iteration **verworfen**. Keine bunten Akzente, keine Gradients.
+
+### Custom Admin-Theme
+- [src/app/(payload)/custom.scss](../src/app/(payload)/custom.scss) — komplett neu geschrieben:
+  - Voller `@import 'tailwindcss'` (split-imports liefern keine arbitrary-values)
+  - oklch-Palette neutral, light + dark mode, shadcn-Tokens + Payload `--theme-*` Tokens
+  - `.template-default` von `display:grid` auf `display:flex` umgestellt — sonst landet die Sidebar in einer 0px-Spalte
+  - Stock-AppHeader hidden (war redundant + zeigte falschen Avatar)
+  - Preflight-Casualties manuell repariert: Buttons, Inputs, Checkboxen, Radios, Tabellen, Pagination
+  - Scoped Reset in `@layer base` damit Tailwind-Utilities (`@layer utilities`) gewinnen
+  - Tabellen: `table-layout: fixed` + explizite Widths pro Accessor (Status 130, Email 280, Date 180, Slug 220, Title flext)
+  - Wrapper-Fix: `.collection-list__tables > .table { width: 100% }` weil Payload das `<table>` in einen extra `<div class="table">` mit `display:table` wrappt
+
+### Custom Komponenten
+- [src/components/admin/Logo.tsx](../src/components/admin/Logo.tsx) + [Icon.tsx](../src/components/admin/Icon.tsx) — monochrome Mark (currentColor)
+- [src/components/admin/Dashboard.tsx](../src/components/admin/Dashboard.tsx) — Custom Dashboard-View. Greeting + Quick-Actions + "Zuletzt bearbeitet"-Liste. KEINE KPI-Cards (User-Wunsch: WordPress-Vibe).
+- [src/components/admin/SidebarNav.tsx](../src/components/admin/SidebarNav.tsx) (Server) + [SidebarNavClient.tsx](../src/components/admin/SidebarNavClient.tsx) (Client) — Linear-modern Sidebar mit Workspace-Card, ⌘K-Suchfeld (visual only), schwarzer "Neu erstellen" CTA, gruppierte Sections (Übersicht/Content/Globals/Einstellungen), User-Card mit Dropdown unten
+
+### Neue shadcn-Primitives
+- [src/components/ui/badge.tsx](../src/components/ui/badge.tsx)
+- [src/components/ui/separator.tsx](../src/components/ui/separator.tsx)
+- [src/components/ui/avatar.tsx](../src/components/ui/avatar.tsx)
+
+### Sidebar-Mockup-Varianten (Design-Exploration)
+Drei Live-Mockups unter `/admin-mockups/v{1,2,3}` als Vergleichsbasis:
+- **V1 — Linear-modern** (gewählt) — siehe `src/components/mockups/SidebarVariantA.tsx`
+- V2 — Notion-workspace — tree-style, expandable Pages
+- V3 — Icon-rail — 60px collapsed, expand on hover
+- Index + README: `src/app/(mockups)/admin-mockups/page.tsx`, `src/app/(mockups)/README.md`
+
+### Plugin-Config-Änderung
+- `afterLoginPath` in [src/plugins/index.ts](../src/plugins/index.ts) von `/admin/page-tree` auf `/admin` umgestellt → Dashboard ist jetzt Landing-Page nach Login.
+
+### UI-Audit + Tabellen-Investigation
+- [docs/UI_AUDIT.md](./UI_AUDIT.md) — 18 Findings (5 Critical, 8 Major, 4 Minor, 2 Inconsistency) vom Subagent durchgegangen. Alle 5 Critical sind fixed, die meisten Major auch.
+- [docs/TABLE_WIDTH_INVESTIGATION.md](./TABLE_WIDTH_INVESTIGATION.md) — tiefe Analyse warum Tabellen die Wrap-Breite nicht füllten, mit Trade-off-Vergleich von 4 Lösungswegen. Gewählt: Option A (table-layout:fixed + per-accessor widths).
+
+---
+
+## Erledigt vs. offen
+
+**Erledigt ✅**
+- Custom neutrale Theme (light + dark)
+- Custom Sidebar (Linear-modern)
+- Custom Dashboard
+- AppHeader weg
+- Preflight-Repairs für Forms/Tabellen/Buttons
+- List-Views haben Dashboard-Proportionen (40px Gutter, 28px Titel, Card-Table)
+- Tabellen-Spaltenbreiten konsistent über Collections
+
+**Offen (kleinere Polish-Themen für Phase-1-Finishing)**
+- Page Tree Plugin (`/admin/page-tree`) hat eigene grüne CTAs — nicht in unserem Style
+- Dashboard-Footer zeigt "Studio · Payload - Payload" (doppeltes "Payload" durch `titleSuffix`)
+- ⌘K-Suchfeld in der Sidebar ist nur visual, keine echte Command-Palette dahinter
+- 2FA / Passkeys / API-Keys Edit-Views noch nicht alle einzeln durchgegangen
+- Dark-Mode quer durchklicken auf alle Pages
+
+---
+
+## Nächste Schritte (vom User noch zu spezifizieren)
+
+1. Phase 1 Finishing: kleinere Polish-Tasks oben aus "Offen"-Liste
+2. Phase 2 starten: Puck Visual Editor in den gleichen Stil bringen
+3. (Später) Phase 3: KI-Layer auf Payload REST + Better Auth API Keys
+
+---
+
+## Referenzdateien
+
+- [UI_AUDIT.md](./UI_AUDIT.md) — Audit-Report mit Findings nach Severity
+- [TABLE_WIDTH_INVESTIGATION.md](./TABLE_WIDTH_INVESTIGATION.md) — Tabellen-Width Trade-off-Analyse
+- [AI_INTEGRATION.md](./AI_INTEGRATION.md) — Notizen + Code-Skeletons für Phase 3
+- [EDITOR_OPTIONS.md](./EDITOR_OPTIONS.md) — Editor-Vergleich (Puck vs. GrapesJS vs. Eigenbau)
+- [../src/app/(mockups)/README.md](../src/app/(mockups)/README.md) — Sidebar-Mockup-Variants
