@@ -28,7 +28,16 @@ export const Users: CollectionConfig = {
   },
   fields: [
     { name: 'email', type: 'email', required: true, unique: true },
-    { name: 'emailVerified', type: 'checkbox', defaultValue: false },
+    {
+      name: 'emailVerified',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: {
+        components: {
+          Field: '@/components/admin/fields/CheckboxField',
+        },
+      },
+    },
     { name: 'name', type: 'text' },
     { name: 'image', type: 'text' },
     {
@@ -42,6 +51,11 @@ export const Users: CollectionConfig = {
         { label: 'User', value: 'user' },
         { label: 'Admin', value: 'admin' },
       ],
+      admin: {
+        components: {
+          Field: '@/components/admin/fields/SelectField',
+        },
+      },
     },
   ],
   timestamps: true,

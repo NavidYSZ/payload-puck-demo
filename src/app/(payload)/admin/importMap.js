@@ -19,6 +19,8 @@ import { PreviewComponent as PreviewComponent_a8a977ebc872c5d5ea7ee689724c0860 }
 import { SlugField as SlugField_2b8867833a34864a02ddf429b0728a40 } from '@payloadcms/next/client'
 import { FolderTableCell as FolderTableCell_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 import { FolderField as FolderField_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
+import { default as default_54efe5ac47ebd68fc4eedfe019343265 } from '@/components/admin/fields/CheckboxField'
+import { default as default_d353a8aad46c2270b48828723c0f0aa4 } from '@/components/admin/fields/SelectField'
 import { TwoFactorField as TwoFactorField_aa8e4427b70b37c7820895ace344eb78 } from '@delmaredigital/payload-better-auth/components'
 import { PasskeysField as PasskeysField_b43647e48ab3e028b782c335a88830d2 } from '@delmaredigital/payload-better-auth/components/passkey'
 import { EditWithPuckButton as EditWithPuckButton_d72027e0f0541e23dd1e340e47e71267 } from '@delmaredigital/payload-puck/admin/client'
@@ -26,6 +28,7 @@ import { EditWithPuckCell as EditWithPuckCell_d72027e0f0541e23dd1e340e47e71267 }
 import { LinkToDoc as LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { ReindexButton as ReindexButton_aead06e4cbf6b2620c5c51c9ab283634 } from '@payloadcms/plugin-search/client'
 import { FolderTypeField as FolderTypeField_2b8867833a34864a02ddf429b0728a40 } from '@payloadcms/next/client'
+import { default as default_244859f4bc2ce38aef9dc096e0b9ae10 } from '@/components/admin/fields/RadioGroupField'
 import { RowLabel as RowLabel_ec255a65fa6fa8d1faeb09cf35284224 } from '@/Header/RowLabel'
 import { RowLabel as RowLabel_1f6ff6ff633e3695d348f4f3c58f1466 } from '@/Footer/RowLabel'
 import { default as default_fc5b0232cf9438114a8d40b64f6540c6 } from '@/components/admin/SidebarNav'
@@ -67,6 +70,8 @@ export const importMap = {
   "@payloadcms/next/client#SlugField": SlugField_2b8867833a34864a02ddf429b0728a40,
   "@payloadcms/next/rsc#FolderTableCell": FolderTableCell_f9c02e79a4aed9a3924487c0cd4cafb1,
   "@payloadcms/next/rsc#FolderField": FolderField_f9c02e79a4aed9a3924487c0cd4cafb1,
+  "@/components/admin/fields/CheckboxField#default": default_54efe5ac47ebd68fc4eedfe019343265,
+  "@/components/admin/fields/SelectField#default": default_d353a8aad46c2270b48828723c0f0aa4,
   "@delmaredigital/payload-better-auth/components#TwoFactorField": TwoFactorField_aa8e4427b70b37c7820895ace344eb78,
   "@delmaredigital/payload-better-auth/components/passkey#PasskeysField": PasskeysField_b43647e48ab3e028b782c335a88830d2,
   "@delmaredigital/payload-puck/admin/client#EditWithPuckButton": EditWithPuckButton_d72027e0f0541e23dd1e340e47e71267,
@@ -74,6 +79,7 @@ export const importMap = {
   "@payloadcms/plugin-search/client#LinkToDoc": LinkToDoc_aead06e4cbf6b2620c5c51c9ab283634,
   "@payloadcms/plugin-search/client#ReindexButton": ReindexButton_aead06e4cbf6b2620c5c51c9ab283634,
   "@payloadcms/next/client#FolderTypeField": FolderTypeField_2b8867833a34864a02ddf429b0728a40,
+  "@/components/admin/fields/RadioGroupField#default": default_244859f4bc2ce38aef9dc096e0b9ae10,
   "@/Header/RowLabel#RowLabel": RowLabel_ec255a65fa6fa8d1faeb09cf35284224,
   "@/Footer/RowLabel#RowLabel": RowLabel_1f6ff6ff633e3695d348f4f3c58f1466,
   "@/components/admin/SidebarNav#default": default_fc5b0232cf9438114a8d40b64f6540c6,

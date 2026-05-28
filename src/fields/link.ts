@@ -38,6 +38,9 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
             admin: {
               layout: 'horizontal',
               width: '50%',
+              components: {
+                Field: '@/components/admin/fields/RadioGroupField',
+              },
             },
             defaultValue: 'reference',
             options: [
@@ -59,6 +62,9 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
                 alignSelf: 'flex-end',
               },
               width: '50%',
+              components: {
+                Field: '@/components/admin/fields/CheckboxField',
+              },
             },
             label: 'Open in new tab',
           },
