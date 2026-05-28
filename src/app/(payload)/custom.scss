@@ -873,3 +873,752 @@ table.table tbody tr:hover {
   background: var(--theme-elevation-100) !important;
   border-color: var(--theme-elevation-300) !important;
 }
+
+/* =====================================================================
+   DEEP-AUDIT FIXES — Phase 2 Finishing (2026-05-28)
+   Addresses the 52-finding UI_AUDIT_DEEP.md report. Targets the inner
+   form layer (everything Payload still renders bare) so the entire
+   admin reaches Linear/Vercel polish.
+   ===================================================================== */
+
+/* ---------------------------------------------------------------------
+   A. Form widgets — restore borders everywhere
+   --------------------------------------------------------------------- */
+
+/* react-select (Role, Language, relationships, every <Select> field) */
+.rs__control,
+.field-type.select .rs__control,
+.field-type.relationship .rs__control {
+  border: 1px solid var(--theme-border-color) !important;
+  border-radius: 8px !important;
+  background: var(--theme-input-bg) !important;
+  min-height: 40px !important;
+  box-shadow: none !important;
+  transition: border-color 120ms ease, box-shadow 120ms ease !important;
+}
+
+.rs__control--is-focused,
+.field-type.select .rs__control--is-focused {
+  border-color: var(--theme-elevation-1000) !important;
+  box-shadow: 0 0 0 3px oklch(0% 0 0 / 0.08) !important;
+}
+
+[data-theme='dark'] .rs__control--is-focused {
+  border-color: var(--theme-elevation-700) !important;
+  box-shadow: 0 0 0 3px oklch(100% 0 0 / 0.08) !important;
+}
+
+.rs__placeholder {
+  color: var(--theme-elevation-500) !important;
+}
+
+.rs__menu {
+  border: 1px solid var(--theme-border-color) !important;
+  border-radius: 8px !important;
+  background: var(--theme-elevation-0) !important;
+  box-shadow:
+    0 8px 24px -8px oklch(0% 0 0 / 0.14),
+    0 2px 6px -2px oklch(0% 0 0 / 0.06) !important;
+  overflow: hidden;
+  margin-top: 4px !important;
+}
+
+.rs__option {
+  font-size: 13px !important;
+  padding: 8px 12px !important;
+  cursor: pointer;
+}
+
+.rs__option--is-focused {
+  background: var(--theme-elevation-100) !important;
+  color: var(--theme-elevation-1000) !important;
+}
+
+.rs__option--is-selected {
+  background: var(--theme-elevation-150) !important;
+  color: var(--theme-elevation-1000) !important;
+  font-weight: 500;
+}
+
+.rs__multi-value {
+  background: var(--theme-elevation-100) !important;
+  border-radius: 6px !important;
+}
+
+.rs__multi-value__label {
+  font-size: 12px !important;
+  color: var(--theme-elevation-900) !important;
+  padding: 2px 6px !important;
+}
+
+.rs__multi-value__remove:hover {
+  background: var(--theme-elevation-200) !important;
+  color: var(--theme-elevation-1000) !important;
+}
+
+.rs__indicator-separator {
+  background: var(--theme-border-color) !important;
+}
+
+/* All field-type inputs — ensure they have visible borders even when
+   Payload's stock CSS sets border:0 inline somewhere. */
+.field-type input:not([type='checkbox']):not([type='radio']),
+.field-type textarea,
+.field-type select {
+  border: 1px solid var(--theme-border-color) !important;
+  background: var(--theme-input-bg) !important;
+}
+
+/* ---------------------------------------------------------------------
+   B. Custom checkbox + radio — visible state indicators
+   Payload renders its own divs for these; without explicit borders +
+   indicator graphics, they're invisible when unchecked.
+   --------------------------------------------------------------------- */
+
+/* Checkbox */
+.checkbox-input {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.checkbox-input__input {
+  width: 18px !important;
+  height: 18px !important;
+  border: 1.5px solid var(--theme-border-color) !important;
+  border-radius: 5px !important;
+  background: var(--theme-elevation-0) !important;
+  position: relative;
+  cursor: pointer;
+  transition: border-color 120ms ease, background 120ms ease;
+  flex-shrink: 0;
+}
+
+.checkbox-input:hover .checkbox-input__input {
+  border-color: var(--theme-elevation-500) !important;
+}
+
+.checkbox-input--checked .checkbox-input__input,
+.checkbox-input__input:checked,
+.checkbox-input--checked > .checkbox-input__input {
+  background: var(--theme-elevation-1000) !important;
+  border-color: var(--theme-elevation-1000) !important;
+}
+
+/* Check glyph — drawn with clip-path so it works against any color */
+.checkbox-input--checked .checkbox-input__input::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--theme-elevation-0);
+  clip-path: polygon(20% 50%, 42% 70%, 80% 28%, 75% 22%, 42% 58%, 26% 44%);
+}
+
+.checkbox-input--partial .checkbox-input__input::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  background: var(--theme-elevation-0);
+  border-radius: 1px;
+  height: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.checkbox-input__label,
+.checkbox-input label {
+  font-size: 13px;
+  color: var(--theme-elevation-900);
+  cursor: pointer;
+}
+
+/* Radio */
+.radio-input {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.radio-input__styled-radio {
+  width: 18px !important;
+  height: 18px !important;
+  border: 1.5px solid var(--theme-border-color) !important;
+  border-radius: 999px !important;
+  background: var(--theme-elevation-0) !important;
+  position: relative;
+  cursor: pointer;
+  transition: border-color 120ms ease;
+  flex-shrink: 0;
+  box-shadow: none !important;
+}
+
+.radio-input:hover .radio-input__styled-radio {
+  border-color: var(--theme-elevation-500) !important;
+}
+
+.radio-input--is-selected .radio-input__styled-radio,
+.radio-input__input:checked + .radio-input__styled-radio {
+  border-color: var(--theme-elevation-1000) !important;
+  border-width: 1.5px !important;
+}
+
+.radio-input--is-selected .radio-input__styled-radio::after {
+  content: '';
+  position: absolute;
+  inset: 3.5px;
+  border-radius: 999px;
+  background: var(--theme-elevation-1000);
+}
+
+.radio-input__label,
+.radio-input label {
+  font-size: 13px;
+  color: var(--theme-elevation-900);
+  cursor: pointer;
+}
+
+.radio-group--layout-horizontal {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+/* ---------------------------------------------------------------------
+   C. Field groups → card chrome
+   Repeater rows, group-fields, blocks-fields, the Lexical editor — all
+   currently render as bare label+content. Wrap each in a card-styled
+   container so the page reads as composed sections, not a flat form.
+   --------------------------------------------------------------------- */
+
+/* Repeater row */
+.collapsible.array-field__row,
+.array-field__row {
+  background: var(--theme-elevation-0) !important;
+  border: 1px solid var(--theme-border-color) !important;
+  border-radius: 10px !important;
+  margin-bottom: 12px !important;
+  padding: 0 !important;
+  overflow: hidden;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+}
+
+.collapsible.array-field__row:hover,
+.array-field__row:hover {
+  border-color: var(--theme-elevation-300) !important;
+}
+
+/* Repeater row header (the toggle strip) */
+.collapsible__toggle,
+.array-field__row .collapsible__toggle--open,
+.array-field__row .collapsible__toggle--closed {
+  background: var(--theme-elevation-50) !important;
+  padding: 10px 14px !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  color: var(--theme-elevation-900) !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--theme-border-color) !important;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: background 100ms ease;
+}
+
+.array-field__row .collapsible__toggle--closed {
+  border-bottom: 0 !important;
+}
+
+.collapsible__toggle:hover {
+  background: var(--theme-elevation-100) !important;
+}
+
+.collapsible__indicator,
+.array-field__row .collapsible__indicator {
+  color: var(--theme-elevation-600);
+}
+
+.collapsible__content,
+.array-field__row .collapsible__content {
+  padding: 16px !important;
+  background: var(--theme-elevation-0);
+}
+
+/* Drag handle on repeater rows */
+.collapsible__drag,
+.array-field__row .collapsible__drag {
+  color: var(--theme-elevation-400);
+  padding-right: 4px;
+}
+
+.collapsible__drag:hover {
+  color: var(--theme-elevation-700);
+}
+
+/* Group field (top-level groups in edit forms) */
+.group-field--top-level,
+.field-type.group {
+  background: var(--theme-elevation-0);
+  border: 1px solid var(--theme-border-color);
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-bottom: 16px;
+}
+
+.group-field--top-level > .group-field__header,
+.field-type.group > label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--theme-elevation-900);
+  margin-bottom: 12px;
+  display: block;
+}
+
+/* Array-field header bar (Show All / Collapse All) */
+.array-field__header,
+.blocks-field__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+}
+
+.array-field__header-action,
+.blocks-field__header-action {
+  background: transparent;
+  border: 0;
+  font-size: 12px;
+  color: var(--theme-elevation-600);
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 100ms ease, color 100ms ease;
+}
+
+.array-field__header-action:hover {
+  background: var(--theme-elevation-100);
+  color: var(--theme-elevation-1000);
+}
+
+/* Blocks field (Banner, Code, Media in Post body) — same card chrome */
+.blocks-field__row,
+.blocks-field__rows > .collapsible {
+  background: var(--theme-elevation-0) !important;
+  border: 1px solid var(--theme-border-color) !important;
+  border-radius: 10px !important;
+  margin-bottom: 12px !important;
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------------
+   D. Lexical rich-text editor — bordered container + toolbar strip
+   --------------------------------------------------------------------- */
+
+.field-type.rich-text-lexical {
+  background: var(--theme-elevation-0);
+  border: 1px solid var(--theme-border-color);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.field-type.rich-text-lexical > label {
+  display: block;
+  padding: 10px 14px 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--theme-elevation-800);
+}
+
+.fixed-toolbar,
+.field-type.rich-text-lexical .fixed-toolbar {
+  background: var(--theme-elevation-50) !important;
+  border: 0 !important;
+  border-bottom: 1px solid var(--theme-border-color) !important;
+  border-radius: 0 !important;
+  padding: 4px 8px !important;
+  gap: 2px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.fixed-toolbar .toolbar-item,
+.fixed-toolbar button {
+  border-radius: 6px !important;
+  padding: 4px 8px !important;
+  transition: background 100ms ease;
+}
+
+.fixed-toolbar button:hover {
+  background: var(--theme-elevation-150) !important;
+}
+
+.fixed-toolbar .divider {
+  background: var(--theme-border-color);
+  width: 1px;
+  margin: 0 4px;
+}
+
+.field-type.rich-text-lexical .editor-container,
+.field-type.rich-text-lexical .ContentEditable__root {
+  padding: 14px 18px !important;
+  min-height: 200px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.field-type.rich-text-lexical .editor-placeholder {
+  padding: 14px 18px !important;
+  color: var(--theme-elevation-500);
+  font-size: 14px;
+}
+
+/* ---------------------------------------------------------------------
+   E. Inner tab bar (Content / Meta / SEO) — visible active state
+   --------------------------------------------------------------------- */
+
+.tabs-field__tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--theme-border-color);
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.tabs-field__tab-button {
+  background: transparent;
+  border: 0;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--theme-elevation-600);
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: color 120ms ease, border-color 120ms ease;
+  margin-bottom: -1px;
+}
+
+.tabs-field__tab-button:hover {
+  color: var(--theme-elevation-900);
+}
+
+.tabs-field__tab-button--active,
+.tabs-field__tab-button[aria-selected='true'] {
+  color: var(--theme-elevation-1000) !important;
+  border-bottom-color: var(--theme-elevation-1000) !important;
+  font-weight: 600 !important;
+}
+
+/* ---------------------------------------------------------------------
+   F. Popup / dropdown menus — card chrome + hover separators
+   Payload's homegrown .popup__content + .popup-button-list
+   --------------------------------------------------------------------- */
+
+.popup__content {
+  background: var(--theme-elevation-0) !important;
+  border: 1px solid var(--theme-border-color) !important;
+  border-radius: 10px !important;
+  box-shadow:
+    0 12px 32px -8px oklch(0% 0 0 / 0.14),
+    0 2px 6px -2px oklch(0% 0 0 / 0.06) !important;
+  padding: 4px !important;
+  overflow: hidden;
+}
+
+.popup-button-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.popup-button-list__button {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 6px !important;
+  padding: 7px 10px !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  color: var(--theme-elevation-800) !important;
+  text-align: left;
+  cursor: pointer;
+  transition: background 80ms ease, color 80ms ease;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.popup-button-list__button:hover {
+  background: var(--theme-elevation-100) !important;
+  color: var(--theme-elevation-1000) !important;
+}
+
+.popup-button-list__separator,
+.popup-button-list hr {
+  height: 1px;
+  background: var(--theme-border-color);
+  border: 0;
+  margin: 4px 0;
+}
+
+/* ---------------------------------------------------------------------
+   G. Media upload dropzone — real drop-target area
+   --------------------------------------------------------------------- */
+
+.dropzone,
+.file-field__dropzone,
+.dropzone.dropzoneStyle--default {
+  border: 2px dashed var(--theme-border-color) !important;
+  background: var(--theme-elevation-50) !important;
+  border-radius: 12px !important;
+  padding: 36px 24px !important;
+  text-align: center;
+  min-height: 160px !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+
+.dropzone:hover,
+.dropzone--has-files-over,
+.dropzone.is-dragging {
+  border-color: var(--theme-elevation-1000) !important;
+  background: var(--theme-elevation-100) !important;
+}
+
+.dropzone__title,
+.file-field__dropzone-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--theme-elevation-800);
+}
+
+.file-field__dropzoneButtons,
+.dropzone__buttons {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* ---------------------------------------------------------------------
+   H. "Pill" buttons that look like text — give them outlined chrome
+   --------------------------------------------------------------------- */
+
+.btn--style-pill,
+.btn--style-icon-label,
+.upload__createNewToggler,
+.upload__listToggler,
+.file-field__dropzoneButtons .btn,
+.list-controls__toggle-columns,
+.list-controls__toggle-where,
+.relationship-add-new__add-button {
+  background: var(--theme-elevation-0) !important;
+  border: 1px solid var(--theme-border-color) !important;
+  border-radius: 8px !important;
+  padding: 6px 12px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  color: var(--theme-elevation-800) !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
+  cursor: pointer;
+  text-decoration: none !important;
+}
+
+.btn--style-pill:hover,
+.btn--style-icon-label:hover,
+.upload__createNewToggler:hover,
+.upload__listToggler:hover,
+.file-field__dropzoneButtons .btn:hover,
+.list-controls__toggle-columns:hover,
+.list-controls__toggle-where:hover,
+.relationship-add-new__add-button:hover {
+  background: var(--theme-elevation-100) !important;
+  border-color: var(--theme-elevation-300) !important;
+  color: var(--theme-elevation-1000) !important;
+}
+
+/* Column-selector pills inside dropdowns shouldn't be pseudo-buttons */
+.pill-selector__pill,
+.pill {
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 3px 8px;
+}
+
+/* ---------------------------------------------------------------------
+   I. Required asterisk + field-description
+   --------------------------------------------------------------------- */
+
+.required,
+.field-label .required,
+.field-label__required {
+  color: var(--theme-error-500) !important;
+  font-weight: 500;
+  margin-left: 2px;
+}
+
+.field-description {
+  font-size: 12px;
+  color: var(--theme-elevation-600);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+/* ---------------------------------------------------------------------
+   J. Doc-controls strip (top bar with Save / Status pill)
+   --------------------------------------------------------------------- */
+
+.doc-controls__content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.doc-controls .status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 500;
+  background: var(--theme-elevation-100);
+  color: var(--theme-elevation-800);
+}
+
+.doc-controls .status--draft {
+  background: var(--theme-warning-50);
+  color: var(--theme-warning-750);
+}
+
+.doc-controls .status--published {
+  background: var(--theme-success-50);
+  color: var(--theme-success-750);
+}
+
+/* Popup-button (the chevron next to Publish) */
+.popup-button.btn__popup {
+  border-left: 1px solid var(--theme-elevation-700) !important;
+  padding: 0 10px !important;
+}
+
+/* ---------------------------------------------------------------------
+   K. Dark mode — explicit overrides for surfaces and borders so cards,
+      inputs, react-select all stay visible
+   --------------------------------------------------------------------- */
+
+[data-theme='dark'] .rs__control {
+  background: var(--theme-elevation-50) !important;
+  border-color: var(--theme-elevation-200) !important;
+}
+
+[data-theme='dark'] .rs__menu {
+  background: var(--theme-elevation-100) !important;
+  border-color: var(--theme-elevation-200) !important;
+}
+
+[data-theme='dark'] .rs__option--is-focused {
+  background: var(--theme-elevation-200) !important;
+}
+
+[data-theme='dark'] .checkbox-input__input,
+[data-theme='dark'] .radio-input__styled-radio {
+  border-color: var(--theme-elevation-300) !important;
+  background: var(--theme-elevation-50) !important;
+}
+
+[data-theme='dark'] .checkbox-input--checked .checkbox-input__input,
+[data-theme='dark'] .radio-input--is-selected .radio-input__styled-radio {
+  background: var(--theme-elevation-1000) !important;
+  border-color: var(--theme-elevation-1000) !important;
+}
+
+[data-theme='dark'] .checkbox-input--checked .checkbox-input__input::after {
+  background: var(--theme-elevation-0);
+}
+
+[data-theme='dark'] .radio-input--is-selected .radio-input__styled-radio::after {
+  background: var(--theme-elevation-1000);
+}
+
+[data-theme='dark'] .search-filter__input,
+[data-theme='dark'] .field-type input:not([type='checkbox']):not([type='radio']),
+[data-theme='dark'] .field-type textarea,
+[data-theme='dark'] .field-type select {
+  background: var(--theme-elevation-50) !important;
+  border-color: var(--theme-elevation-200) !important;
+}
+
+[data-theme='dark'] .collapsible.array-field__row,
+[data-theme='dark'] .array-field__row,
+[data-theme='dark'] .blocks-field__row,
+[data-theme='dark'] .group-field--top-level,
+[data-theme='dark'] .field-type.group,
+[data-theme='dark'] .field-type.rich-text-lexical {
+  background: var(--theme-elevation-50) !important;
+  border-color: var(--theme-elevation-200) !important;
+}
+
+[data-theme='dark'] .collapsible__toggle,
+[data-theme='dark'] .fixed-toolbar {
+  background: var(--theme-elevation-100) !important;
+  border-color: var(--theme-elevation-200) !important;
+}
+
+[data-theme='dark'] .popup__content {
+  background: var(--theme-elevation-100) !important;
+  border-color: var(--theme-elevation-200) !important;
+}
+
+[data-theme='dark'] .doc-controls {
+  background: var(--theme-elevation-50);
+  border-bottom: 1px solid var(--theme-border-color);
+}
+
+[data-theme='dark'] .btn--style-pill,
+[data-theme='dark'] .list-controls__toggle-columns,
+[data-theme='dark'] .list-controls__toggle-where {
+  background: var(--theme-elevation-50) !important;
+  border-color: var(--theme-elevation-200) !important;
+}
+
+[data-theme='dark'] .btn--style-pill:hover,
+[data-theme='dark'] .list-controls__toggle-columns:hover,
+[data-theme='dark'] .list-controls__toggle-where:hover {
+  background: var(--theme-elevation-100) !important;
+  border-color: var(--theme-elevation-400) !important;
+}
+
+[data-theme='dark'] .dropzone {
+  background: var(--theme-elevation-50) !important;
+  border-color: var(--theme-elevation-200) !important;
+}
+
+[data-theme='dark'] .dropzone:hover {
+  background: var(--theme-elevation-100) !important;
+  border-color: var(--theme-elevation-400) !important;
+}
+
+/* ---------------------------------------------------------------------
+   L. Sidebar nav — active-state (paired with aria-current in TSX)
+   --------------------------------------------------------------------- */
+
+.admin-shell nav a[aria-current='page'] {
+  background: var(--accent) !important;
+  color: var(--foreground) !important;
+  font-weight: 600 !important;
+}
+
+.admin-shell nav a[aria-current='page'] svg {
+  color: var(--foreground) !important;
+}

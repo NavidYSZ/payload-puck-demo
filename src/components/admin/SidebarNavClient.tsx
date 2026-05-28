@@ -88,6 +88,7 @@ const NavRow: React.FC<{ item: SidebarItem }> = ({ item }) => {
   return (
     <Link
       href={item.href}
+      aria-current={active ? 'page' : undefined}
       className={cn(
         'group flex w-full items-center gap-2.5 rounded-md px-2 py-[7px] text-[13px] transition-colors',
         active
