@@ -21,6 +21,10 @@ export default buildConfig({
   admin: {
     components: {
       providers: ['@/components/admin/PuckProvider'],
+      graphics: {
+        Logo: '@/components/admin/Logo',
+        Icon: '@/components/admin/Icon',
+      },
     },
     importMap: {
       baseDir: path.resolve(dirname),

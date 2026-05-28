@@ -29,6 +29,8 @@ import { FolderTypeField as FolderTypeField_2b8867833a34864a02ddf429b0728a40 } f
 import { RowLabel as RowLabel_ec255a65fa6fa8d1faeb09cf35284224 } from '@/Header/RowLabel'
 import { RowLabel as RowLabel_1f6ff6ff633e3695d348f4f3c58f1466 } from '@/Footer/RowLabel'
 import { LogoutButton as LogoutButton_aa8e4427b70b37c7820895ace344eb78 } from '@delmaredigital/payload-better-auth/components'
+import { default as default_534076e2c753ea5d539a54b05f456b1b } from '@/components/admin/Icon'
+import { default as default_a44df17d0fc3dcd873dae43dc3bf66bd } from '@/components/admin/Logo'
 import { SecurityNavLinks as SecurityNavLinks_e3642e6c1e5dbb92bcf178f42e87e19e } from '@delmaredigital/payload-better-auth/components/management'
 import { PageTreeNavLink as PageTreeNavLink_11b13d26a0022dae5ea66a055ed30952 } from '@delmaredigital/payload-page-tree/client'
 import { BeforeLogin as BeforeLogin_aa8e4427b70b37c7820895ace344eb78 } from '@delmaredigital/payload-better-auth/components'
@@ -40,6 +42,7 @@ import { PuckEditorView as PuckEditorView_3b27b37268b8e78cccc06ea6de889aa6 } fro
 import { PageTreeView as PageTreeView_05df9824c06b5116cee652a5b2bbd184 } from '@delmaredigital/payload-page-tree/rsc'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
+/** @type import('payload').ImportMap */
 export const importMap = {
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalField": RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e,
@@ -72,6 +75,8 @@ export const importMap = {
   "@/Header/RowLabel#RowLabel": RowLabel_ec255a65fa6fa8d1faeb09cf35284224,
   "@/Footer/RowLabel#RowLabel": RowLabel_1f6ff6ff633e3695d348f4f3c58f1466,
   "@delmaredigital/payload-better-auth/components#LogoutButton": LogoutButton_aa8e4427b70b37c7820895ace344eb78,
+  "@/components/admin/Icon#default": default_534076e2c753ea5d539a54b05f456b1b,
+  "@/components/admin/Logo#default": default_a44df17d0fc3dcd873dae43dc3bf66bd,
   "@delmaredigital/payload-better-auth/components/management#SecurityNavLinks": SecurityNavLinks_e3642e6c1e5dbb92bcf178f42e87e19e,
   "@delmaredigital/payload-page-tree/client#PageTreeNavLink": PageTreeNavLink_11b13d26a0022dae5ea66a055ed30952,
   "@delmaredigital/payload-better-auth/components#BeforeLogin": BeforeLogin_aa8e4427b70b37c7820895ace344eb78,

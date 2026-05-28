@@ -1,0 +1,339 @@
+/* =====================================================================
+   Custom Admin Theme — shadcn-inspired refresh
+   Overrides Payload's default theme variables for a modern look.
+   ===================================================================== */
+
+/* Brand palette */
+:root {
+  --brand-50: oklch(96.5% 0.025 280deg);
+  --brand-100: oklch(93% 0.04 280deg);
+  --brand-200: oklch(86% 0.07 280deg);
+  --brand-300: oklch(78% 0.1 280deg);
+  --brand-400: oklch(68% 0.16 280deg);
+  --brand-500: oklch(58% 0.21 280deg);
+  --brand-600: oklch(50% 0.21 280deg);
+  --brand-700: oklch(42% 0.18 280deg);
+  --brand-800: oklch(34% 0.13 280deg);
+  --brand-900: oklch(26% 0.09 280deg);
+
+  --surface-0: oklch(99.5% 0.002 264deg);
+  --surface-50: oklch(98% 0.003 264deg);
+  --surface-100: oklch(96% 0.004 264deg);
+  --surface-150: oklch(94% 0.005 264deg);
+  --surface-200: oklch(91% 0.006 264deg);
+  --surface-300: oklch(85% 0.008 264deg);
+  --surface-400: oklch(72% 0.012 264deg);
+  --surface-500: oklch(58% 0.014 264deg);
+  --surface-600: oklch(46% 0.014 264deg);
+  --surface-700: oklch(36% 0.012 264deg);
+  --surface-800: oklch(26% 0.01 264deg);
+  --surface-900: oklch(18% 0.008 264deg);
+  --surface-1000: oklch(12% 0.006 264deg);
+}
+
+[data-theme='light'] {
+  --theme-bg: var(--surface-50);
+  --theme-text: var(--surface-1000);
+  --theme-input-bg: var(--surface-0);
+  --theme-border-color: oklch(91% 0.006 264deg);
+
+  --theme-elevation-0: var(--surface-50);
+  --theme-elevation-50: var(--surface-0);
+  --theme-elevation-100: var(--surface-100);
+  --theme-elevation-150: var(--surface-150);
+  --theme-elevation-200: var(--surface-200);
+  --theme-elevation-250: oklch(89% 0.007 264deg);
+  --theme-elevation-300: var(--surface-300);
+  --theme-elevation-400: var(--surface-400);
+  --theme-elevation-500: var(--surface-500);
+  --theme-elevation-600: var(--surface-600);
+  --theme-elevation-700: var(--surface-700);
+  --theme-elevation-800: var(--surface-800);
+  --theme-elevation-850: oklch(22% 0.009 264deg);
+  --theme-elevation-900: var(--surface-900);
+  --theme-elevation-1000: var(--surface-1000);
+
+  --theme-success-50: oklch(96% 0.04 155deg);
+  --theme-success-100: oklch(92% 0.07 155deg);
+  --theme-success-500: oklch(62% 0.16 155deg);
+  --theme-success-750: oklch(45% 0.14 155deg);
+
+  --theme-warning-50: oklch(96% 0.05 75deg);
+  --theme-warning-100: oklch(92% 0.09 75deg);
+  --theme-warning-500: oklch(72% 0.18 75deg);
+  --theme-warning-750: oklch(55% 0.15 75deg);
+
+  --theme-error-50: oklch(96% 0.04 25deg);
+  --theme-error-100: oklch(92% 0.07 25deg);
+  --theme-error-500: oklch(60% 0.22 25deg);
+  --theme-error-750: oklch(46% 0.19 25deg);
+}
+
+[data-theme='dark'] {
+  --theme-bg: var(--surface-1000);
+  --theme-text: var(--surface-50);
+  --theme-input-bg: var(--surface-900);
+  --theme-border-color: oklch(28% 0.01 264deg);
+
+  --theme-elevation-0: var(--surface-1000);
+  --theme-elevation-50: var(--surface-900);
+  --theme-elevation-100: oklch(16% 0.007 264deg);
+  --theme-elevation-150: oklch(19% 0.008 264deg);
+  --theme-elevation-200: oklch(22% 0.009 264deg);
+  --theme-elevation-250: oklch(25% 0.01 264deg);
+  --theme-elevation-300: oklch(30% 0.011 264deg);
+  --theme-elevation-400: oklch(40% 0.012 264deg);
+  --theme-elevation-500: oklch(52% 0.013 264deg);
+  --theme-elevation-600: oklch(62% 0.012 264deg);
+  --theme-elevation-700: oklch(72% 0.01 264deg);
+  --theme-elevation-800: oklch(82% 0.008 264deg);
+  --theme-elevation-850: oklch(87% 0.006 264deg);
+  --theme-elevation-900: oklch(92% 0.005 264deg);
+  --theme-elevation-1000: var(--surface-50);
+
+  --theme-success-50: oklch(20% 0.05 155deg);
+  --theme-success-100: oklch(28% 0.08 155deg);
+  --theme-success-500: oklch(70% 0.17 155deg);
+  --theme-success-750: oklch(82% 0.15 155deg);
+
+  --theme-warning-50: oklch(22% 0.06 75deg);
+  --theme-warning-100: oklch(30% 0.1 75deg);
+  --theme-warning-500: oklch(80% 0.18 75deg);
+  --theme-warning-750: oklch(88% 0.15 75deg);
+
+  --theme-error-50: oklch(22% 0.06 25deg);
+  --theme-error-100: oklch(28% 0.09 25deg);
+  --theme-error-500: oklch(68% 0.22 25deg);
+  --theme-error-750: oklch(78% 0.18 25deg);
+}
+
+:root,
+[data-theme] {
+  --font-body:
+    'Geist', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+}
+
+body {
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.011em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.022em;
+  font-weight: 600;
+}
+
+.custom-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  user-select: none;
+}
+
+.custom-logo__wordmark {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--theme-elevation-1000);
+  line-height: 1;
+}
+
+/* Inputs & buttons — rounder, softer */
+.btn,
+.field-type input,
+.field-type textarea,
+.field-type select,
+[class*='input__'] input,
+[class*='input__'] textarea {
+  border-radius: 8px !important;
+}
+
+.btn--style-primary,
+button[type='submit']:not(.btn--style-secondary):not(.btn--style-tertiary):not(.btn--style-icon-label) {
+  background: linear-gradient(135deg, var(--brand-500), var(--brand-600)) !important;
+  border-color: transparent !important;
+  color: white !important;
+  font-weight: 500 !important;
+  transition: all 180ms ease !important;
+  box-shadow:
+    0 1px 2px 0 oklch(58% 0.21 280deg / 0.15),
+    0 0 0 1px oklch(58% 0.21 280deg / 0.05) inset;
+}
+
+.btn--style-primary:hover,
+button[type='submit']:not(.btn--style-secondary):not(.btn--style-tertiary):not(.btn--style-icon-label):hover {
+  background: linear-gradient(135deg, var(--brand-600), var(--brand-700)) !important;
+  transform: translateY(-1px);
+  box-shadow:
+    0 4px 12px 0 oklch(58% 0.21 280deg / 0.25),
+    0 0 0 1px oklch(58% 0.21 280deg / 0.1) inset;
+}
+
+.btn--style-secondary {
+  border-radius: 8px !important;
+  border: 1px solid var(--theme-border-color) !important;
+  background: var(--theme-elevation-50) !important;
+  transition: all 150ms ease !important;
+}
+
+.btn--style-secondary:hover {
+  background: var(--theme-elevation-100) !important;
+  border-color: var(--theme-elevation-300) !important;
+}
+
+/* Focus rings */
+.field-type input:focus,
+.field-type textarea:focus,
+.field-type select:focus,
+[class*='input__'] input:focus,
+[class*='input__'] textarea:focus {
+  outline: none !important;
+  border-color: var(--brand-400) !important;
+  box-shadow: 0 0 0 3px oklch(58% 0.21 280deg / 0.18) !important;
+}
+
+/* Nav */
+.nav {
+  background: var(--theme-elevation-0) !important;
+  border-right: 1px solid var(--theme-border-color) !important;
+}
+
+.nav__wrapper {
+  padding-top: 16px !important;
+}
+
+.nav__link {
+  border-radius: 8px !important;
+  margin: 2px 8px !important;
+  padding: 8px 12px !important;
+  font-weight: 500 !important;
+  transition: all 120ms ease !important;
+  color: var(--theme-elevation-700) !important;
+}
+
+.nav__link:hover {
+  background: var(--theme-elevation-100) !important;
+  color: var(--theme-elevation-1000) !important;
+}
+
+.nav__link--active,
+.nav__link--active:hover {
+  background: var(--brand-50) !important;
+  color: var(--brand-700) !important;
+}
+
+[data-theme='dark'] .nav__link--active,
+[data-theme='dark'] .nav__link--active:hover {
+  background: oklch(28% 0.12 280deg) !important;
+  color: oklch(85% 0.07 280deg) !important;
+}
+
+.nav__label {
+  text-transform: uppercase;
+  font-size: 11px !important;
+  letter-spacing: 0.06em;
+  color: var(--theme-elevation-500) !important;
+  font-weight: 600 !important;
+  padding: 16px 16px 8px !important;
+}
+
+/* Header */
+.app-header {
+  background: var(--theme-elevation-0) !important;
+  border-bottom: 1px solid var(--theme-border-color) !important;
+  backdrop-filter: blur(8px);
+}
+
+/* Dashboard */
+.dashboard__group,
+.dashboard__card {
+  border-radius: 12px !important;
+  background: var(--theme-elevation-50) !important;
+  border: 1px solid var(--theme-border-color) !important;
+  transition: all 200ms ease;
+}
+
+.dashboard__group:hover,
+.dashboard__card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 24px -8px oklch(0% 0 0 / 0.08),
+    0 2px 6px -2px oklch(0% 0 0 / 0.04);
+  border-color: var(--brand-300) !important;
+}
+
+/* Tables */
+.collection-list__table,
+.collection-list table,
+table {
+  border-radius: 12px !important;
+  overflow: hidden;
+  border: 1px solid var(--theme-border-color);
+}
+
+thead tr {
+  background: var(--theme-elevation-50) !important;
+}
+
+tbody tr {
+  transition: background 100ms ease;
+}
+
+tbody tr:hover {
+  background: var(--theme-elevation-50) !important;
+}
+
+/* Pills / status badges */
+.pill {
+  border-radius: 999px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.01em;
+}
+
+/* Tooltips */
+.tooltip {
+  border-radius: 6px !important;
+  font-weight: 500 !important;
+  box-shadow:
+    0 8px 24px -4px oklch(0% 0 0 / 0.18),
+    0 2px 6px -2px oklch(0% 0 0 / 0.08) !important;
+}
+
+/* Login screen polish */
+.template-default--login,
+.login {
+  background:
+    radial-gradient(ellipse at top right, oklch(58% 0.21 280deg / 0.08), transparent 60%),
+    radial-gradient(ellipse at bottom left, oklch(50% 0.18 220deg / 0.06), transparent 60%),
+    var(--theme-bg) !important;
+}
+
+.login__wrap {
+  background: var(--theme-elevation-0) !important;
+  border-radius: 16px !important;
+  border: 1px solid var(--theme-border-color);
+  box-shadow:
+    0 20px 60px -20px oklch(0% 0 0 / 0.12),
+    0 4px 16px -4px oklch(0% 0 0 / 0.06);
+  padding: 32px !important;
+}
+
+/* Scrollbars (WebKit) */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--theme-elevation-200);
+  border-radius: 999px;
+  border: 2px solid var(--theme-bg);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--theme-elevation-400);
+}
